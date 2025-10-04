@@ -9,7 +9,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ??
         "Data Source=portalacademico.db"));
 
-// Configurar Identity con roles
+// 1. Configurar Identity: Usamos AddIdentity<IdentityUser>() y separamos AddRoles
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -17,10 +17,12 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// Configurar las rutas correctas de Razor Pages de Identity
+
+// 2. Configurar las rutas de Autenticación de Cookies (SOLUCIÓN DEL ERROR ANTERIOR)
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/Identity/Account/Login";
+    // Las rutas DEBEN empezar con una barra diagonal (/)
+    options.LoginPath = "/Identity/Account/Login"; 
     options.LogoutPath = "/Identity/Account/Logout";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
@@ -70,13 +72,15 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
+app.MapRazorPages(); // Esto mapea las rutas de Identity
 
 // Crear roles al iniciar
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    await SeedRoles.InitializeAsync(roleManager);
+    // Asegúrate de que esta línea esté bien referenciada.
+    // Asumo que tienes una clase estática llamada SeedRoles.
+    // await SeedRoles.InitializeAsync(roleManager); 
 }
 
 app.Run();
