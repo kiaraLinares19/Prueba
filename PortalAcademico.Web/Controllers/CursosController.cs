@@ -44,7 +44,7 @@ namespace PortalAcademico.Web.Controllers
             return View(cursos);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Detalle(int id)
         {
             var curso = await _context.Cursos.FindAsync(id);
             if (curso == null)
