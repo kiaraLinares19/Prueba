@@ -13,8 +13,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = builder.Configuration.GetConnectionString("RedisConnection") ??
-        "redis-12358.crce181.sa-east-1-2.ec2.redns.redis-cloud.com:12358"; 
+    options.Configuration ="redis-12358.crce181.sa-east-1-2.ec2.redns.redis-cloud.com:12358,password=T5xipCdawNZgyUk530EMmKsTSJ8b0qwq,ssl=True,abortConnect=False";
+    options.InstanceName ="PortalAcademico_"; 
 });
 
 builder.Services.AddSession(options =>
