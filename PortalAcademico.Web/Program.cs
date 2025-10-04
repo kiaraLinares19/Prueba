@@ -11,9 +11,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+var redisConnection = builder.Configuration.GetConnectionString("RedisConnection");
+if (string.IsNullOrEmpty(redisConnection))
+{
+    throw new InvalidOperationException("La cadena de conexión 'RedisConnection' no está configurada.");
+}
+
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration ="redis-12358.crce181.sa-east-1-2.ec2.redns.redis-cloud.com:12358,password=T5xipCdawNZgyUk530EMmKsTSJ8b0qwq,ssl=True,abortConnect=False";
+    options.Configuration = redisConnection;
     options.InstanceName ="PortalAcademico_"; 
 });
 
@@ -41,7 +47,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSession();
+app.UseSession(); 
 
 app.MapControllerRoute(
     name: "default",
