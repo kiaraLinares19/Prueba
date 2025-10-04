@@ -13,7 +13,7 @@
         </div>
 
         <div class="col-md-2">
-            <input type="number" name="creditosMin" class="form-control" placeholder="Créditos mín." value="@Context.Request.Query["creditosMin"]"/>
+            <input type="number" name="creditosMin" class="form-control" placeholder="Créditos mín." value="@Context.Request.Query["creditosMin"]" />
         </div>
         <div class="col-md-2">
             <input type="number" name="creditosMax" class="form-control" placeholder="Créditos máx." value="@Context.Request.Query["creditosMax"]" />
@@ -31,6 +31,7 @@
         </div>
     </div>
 </form>
+
 
 @if (!Model.Any())
 {
