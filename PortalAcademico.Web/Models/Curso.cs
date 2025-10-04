@@ -9,11 +9,11 @@ namespace PortalAcademico.Web.Models
 
         [Required]
         [StringLength(10)]
-        public string Codigo { get; set; }
+        public string Codigo { get; set; } = null!;
 
         [Required]
         [StringLength(100)]
-        public string Nombre { get; set; }
+        public string Nombre { get; set; } = null!;
 
         [Range(1, int.MaxValue, ErrorMessage = "Los créditos deben ser mayores a 0.")]
         public int Creditos { get; set; }
@@ -30,7 +30,7 @@ namespace PortalAcademico.Web.Models
 
         public bool Activo { get; set; }
 
-        public static ValidationResult ValidarHorarioFin(TimeSpan horarioFin, ValidationContext context)
+        public static ValidationResult? ValidarHorarioFin(TimeSpan horarioFin, ValidationContext context)
         {
             var curso = context.ObjectInstance as Curso;
             if (curso != null && horarioFin <= curso.HorarioInicio)

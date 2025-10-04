@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
@@ -11,7 +12,7 @@ namespace PortalAcademico.Web.Models
         public int CursoId { get; set; }
 
         [Required]
-        public string UsuarioId { get; set; }
+        public string UsuarioId { get; set; } = null!; // requerido no nulo
 
         [Required]
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
@@ -20,8 +21,8 @@ namespace PortalAcademico.Web.Models
         [EnumDataType(typeof(EstadoMatricula))]
         public EstadoMatricula Estado { get; set; } = EstadoMatricula.Pendiente;
 
-        public Curso Curso { get; set; }
-        public IdentityUser Usuario { get; set; }
+        public Curso? Curso { get; set; } // puede ser nulo si no se carga con Include
+        public IdentityUser? Usuario { get; set; } // puede ser nulo si no se carga
     }
 
     public enum EstadoMatricula
