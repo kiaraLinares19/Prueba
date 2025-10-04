@@ -1,0 +1,42 @@
+@model IEnumerable<PortalAcademico.Web.Models.Matricula>
+@using PortalAcademico.Web.Models
+@{
+    int cursoId = (int)ViewBag.CursoId;
+}
+
+<h3>Matrículas del curso @cursoId</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Matrícula</th>
+            <th>Estudiante (ID)</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>@m.Id</td>
+                <td>@m.UsuarioId</td>
+                <td>@m.Estado</td>
+                <td>
+                    @if (m.Estado == EstadoMatricula.Pendiente)
+                    {
+                        <form asp-action="ConfirmarMatricula" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@m.Id" />
+                            <button type="submit" class="btn btn-success">Confirmar</button>
+                        </form>
+
+                        <form asp-action="CancelarMatricula" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@m.Id" />
+                            <button type="submit" class="btn btn-danger">Cancelar</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,54 @@
+@model IEnumerable<PortalAcademico.Web.Models.Curso>
+
+@{
+    ViewData["Title"] = "Panel del Coordinador";
+}
+
+<h2 class="text-center">Panel del Coordinador</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Crear nuevo curso</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Créditos</th>
+            <th>Cupo Máximo</th>
+            <th>Horario</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var curso in Model)
+    {
+        <tr>
+            <td>@curso.Codigo</td>
+            <td>@curso.Nombre</td>
+            <td>@curso.Creditos</td>
+            <td>@curso.CupoMaximo</td>
+            <td>@curso.HorarioInicio - @curso.HorarioFin</td>
+            <td>
+                @if (curso.Activo)
+                {
+                    <span class="text-success">Sí</span>
+                }
+                else
+                {
+                    <span class="text-danger">No</span>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@curso.Id" class="btn btn-primary btn-sm">Editar</a>
+                <a asp-action="Matriculas" asp-route-id="@curso.Id" class="btn btn-info btn-sm">Matrículas</a>
+                <form asp-action="Desactivar" asp-route-id="@curso.Id" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-warning btn-sm">Desactivar</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
