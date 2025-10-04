@@ -35,6 +35,20 @@
             </div>
         </nav>
     </header>
+    @{
+        var ultimoCurso = Context.Session.GetString("UltimoCurso");
+        var ultimoCursoId = Context.Session.GetInt32("UltimoCursoId");
+    }
+
+    @if (!string.IsNullOrEmpty(ultimoCurso))
+    {
+        <div class="alert alert-info text-center m-2">
+            <a asp-controller="Cursos" asp-action="Details" asp-route-id="@ultimoCursoId">
+                Volver al curso @ultimoCurso
+            </a>
+        </div>
+    }
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
