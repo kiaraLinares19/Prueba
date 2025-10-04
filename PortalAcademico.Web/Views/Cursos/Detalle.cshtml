@@ -4,7 +4,7 @@
     ViewData["Title"] = "Detalle del Curso";
 }
 
-<div class="card">
+<div class="card shadow">
     <div class="card-header bg-primary text-white">
         <h4>@Model.Nombre</h4>
     </div>
@@ -14,11 +14,20 @@
         <p><strong>Horario:</strong> @Model.HorarioInicio - @Model.HorarioFin</p>
         <p><strong>Cupo máximo:</strong> @Model.CupoMaximo</p>
 
-        <form asp-action="Inscribirse" method="post">
-            <input type="hidden" name="id" value="@Model.Id" />
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+        else if (TempData["Exito"] != null)
+        {
+            <div class="alert alert-success">@TempData["Exito"]</div>
+        }
+
+        <form asp-action="Inscribirse" asp-controller="Matriculas" method="post">
+            <input type="hidden" name="cursoId" value="@Model.Id" />
             <button type="submit" class="btn btn-success">Inscribirse</button>
         </form>
     </div>
 </div>
 
-<a asp-action="Index" class="btn btn-link mt-3">← Volver al catálogo</a>
+<a asp-action="Index" class="btn btn-link mt-3">Volver al catálogo</a>
